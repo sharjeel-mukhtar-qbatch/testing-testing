@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     branches:
-      - ahmad.hassan-feature-amazon-detail-page
+      - master
 
 jobs:
   build:
