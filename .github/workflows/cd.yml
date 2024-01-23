@@ -28,7 +28,7 @@ jobs:
         uses: test-room-7/action-update-file@v1
         with:
         # Include all JS files from the `dist` directory
-        file-path: dist/production.zip
+        file-path: .dist/production.zip
         commit-msg: Update resources
         github-token: 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
 
