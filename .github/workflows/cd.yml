@@ -24,15 +24,23 @@ jobs:
       - name: Build for production
         run: npm run build-prod
 
-      - name: Create versioned zip
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          TIMESTAMP=$(date +"%Y%m%d%H%M%S")
-          ZIP_NAME="ah_${VERSION}_${TIMESTAMP}.zip"
-          zip -r "./build/$ZIP_NAME" ./build/production
-
-      - name: Upload zip as artifact
-        uses: actions/upload-artifact@v2
+      - name: Update resources
+        uses: test-room-7/action-update-file@v1
         with:
-          name: build-artifact
-          path: ./build/production.zip
+        # Include all JS files from the `dist` directory
+        file-path: dist/production.zip
+        commit-msg: Update resources
+        github-token: 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
+
+      # - name: Create versioned zip
+      #   run: |
+      #     VERSION=$(node -p "require('./package.json').version")
+      #     TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+      #     ZIP_NAME="ah_${VERSION}_${TIMESTAMP}.zip"
+      #     zip -r "./build/$ZIP_NAME" ./build/production
+
+      # - name: Upload zip as artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: build-artifact
+      #     path: ./build/production.zip
