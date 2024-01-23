@@ -1,0 +1,38 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - ahmad.hassan-feature-amazon-detail-page
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '15'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build for production
+        run: npm run build-prod
+
+      - name: Create versioned zip
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+          ZIP_NAME="ah_${VERSION}_${TIMESTAMP}.zip"
+          zip -r "./build_versions/$ZIP_NAME" ./build/production
+
+      - name: Upload zip as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifact
+          path: ./build_versions/*.zip
