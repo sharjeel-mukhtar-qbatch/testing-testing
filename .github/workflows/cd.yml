@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '15'
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
@@ -29,10 +29,10 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           TIMESTAMP=$(date +"%Y%m%d%H%M%S")
           ZIP_NAME="ah_${VERSION}_${TIMESTAMP}.zip"
-          zip -r "./build_versions/$ZIP_NAME" ./build/production
+          zip -r "./build/$ZIP_NAME" ./build/production
 
       - name: Upload zip as artifact
         uses: actions/upload-artifact@v2
         with:
           name: build-artifact
-          path: ./build_versions/*.zip
+          path: ./build/*.zip
